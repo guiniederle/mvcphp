@@ -1,0 +1,6 @@
+{
+  "dbname": "mercadinhodb",
+  "dbhost": "172.19.0.4",
+  "dbuser": "postgres",
+  "dbpass": "postgres"
+}
