@@ -96,11 +96,13 @@ class View
     public function getContents()
     {
         ob_start();
+        $pageView = "views/index.phtml";
         if(isset($this->st_view))
-            require_once $this->st_view;
+            $pageView = $this->st_view;
+        require_once "views/_layout.phtml";
         $this->st_contents = ob_get_contents();
         ob_end_clean();
-        return $this->st_contents;   
+        return $this->st_contents;
     }
       
     /**

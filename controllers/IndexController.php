@@ -10,7 +10,6 @@ class IndexController
 //        var_dump($produtos->getProducts());exit;
 
 
-        $o_view = new \View('views/index.phtml');
-        $o_view->showContents();
+        $o_view = new \View('index.phtml');
     }
 }
