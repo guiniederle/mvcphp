@@ -43,6 +43,7 @@ class View
         if($st_view != null)
             $this->setView($st_view);
         $this->v_params = $v_params;
+        $this->showContents();
     }   
       
     /**
@@ -52,6 +53,7 @@ class View
     */
     public function setView($st_view)
     {
+        $st_view = "views/" . $st_view;
         if(file_exists($st_view))
             $this->st_view = $st_view;
         else

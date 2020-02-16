@@ -6,8 +6,8 @@ class IndexController
 
     public function indexAction()
     {
-        $produtos = new Produtos();
-        var_dump($produtos->getProducts());exit;
+//        $produtos = new Produtos();
+//        var_dump($produtos->getProducts());exit;
 
 
         $o_view = new \View('views/index.phtml');
