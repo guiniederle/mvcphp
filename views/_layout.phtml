@@ -16,21 +16,13 @@
                aria-controls="v-pills-home" aria-selected="true">Venda</a>
             <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Imposto&acao=index" role="tab"
                aria-controls="v-pills-profile" aria-selected="false">Impostos</a>
-            <a class="nav-link" href="#v-pills-messages" role="tab"
+            <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=TipoProdutos&acao=index" role="tab"
                aria-controls="v-pills-messages" aria-selected="false">Tipo de Produtos</a>
-            <a class="nav-link" href="#v-pills-settings" role="tab"
+            <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Produtos&acao=index" role="tab"
                aria-controls="v-pills-settings" aria-selected="false">Produtos</a>
         </div>
     </div>
-    <div class="col-9 p-0">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Library</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Data</li>
-            </ol>
-        </nav>
-
+    <div class="col-9 p-2">
         <div class="container">
             <?php include($pageView) ?>
         </div>

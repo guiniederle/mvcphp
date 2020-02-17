@@ -12,7 +12,7 @@ try {
 echo "----------------------------------------- RODANDO MIGRATIONS --------------------------------\n";
 
 $sql = "CREATE TABLE IF NOT EXISTS imposto (
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     descricao char(255),
     porcentagem float
 )";
@@ -27,7 +27,7 @@ if (!$table) {
 echo "---------------------------------------------------------------------------------------------\n";
 
 $sql = "CREATE TABLE IF NOT EXISTS  tiposprodutos (
-    id integer CONSTRAINT firstkey PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     descricao char(255)
 )";
 $table = $db->exec($sql);
