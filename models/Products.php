@@ -18,9 +18,9 @@ class Products extends PersistModelAbstract implements IModels
 
     public function getById($id)
     {
-        $sql = "SELECT p.id, p.description, pt.description as producttype FROM {$this->_dbName} 
+        $sql = "SELECT p.id, p.description, pt.description as producttype FROM {$this->_dbName} p
             JOIN producttype pt ON pt.id = productTypeId
-            WHERE id = :id";
+            WHERE p.id = :id";
         $taxes = $this->_db->prepare($sql);
         $taxes->bindValue(':id', $id);
         $taxes->execute();

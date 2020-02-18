@@ -43,11 +43,6 @@ class ProductsController implements IController
     {
         if (isset($_GET['id']))
             $this->_product->delete($_GET['id']);
-        header('Location: http://'.$_SERVER['HTTP_HOST']."/?controle=Taxes&acao=index");
-    }
-
-    public function jsonAction()
-    {
-        echo json_encode($this->_product->getAll());
+        header('Location: http://'.$_SERVER['HTTP_HOST']."/?controle=Products&acao=index");
     }
 }
