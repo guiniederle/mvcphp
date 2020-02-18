@@ -12,7 +12,7 @@ class Taxes extends PersistModelAbstract implements IModels
         $taxes = $this->_db->prepare($sql);
         $taxes->execute();
 
-        return $taxes->fetchAll();
+        return $taxes->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getById($id)

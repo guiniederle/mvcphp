@@ -1,4 +1,5 @@
 <?php
+$controller = 'Taxes';
 $params = $this->getParams();
 if (isset($params['return'])) {
     echo "<div class=\"row\">
@@ -9,7 +10,7 @@ if (isset($params['return'])) {
 }
 ?>
 
-<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Taxes&acao=insertOrUpdate" method="post">
+<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate" method="post">
     <div class="form-row">
         <input hidden name="id" value="<?php echo $params['data']['id'] ?>" readonly>
         <div class="form-group col-md-6">
@@ -21,6 +22,6 @@ if (isset($params['return'])) {
             <input type="text" class="form-control" name="percentage" id="percentage" value="<?php echo $params['data']['percentage'] ?>">
         </div>
     </div>
-    <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Taxes&acao=index" class="btn btn-link btn-sm">Voltar</a>
+    <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=index" class="btn btn-link btn-sm">Voltar</a>
     <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 </form>

@@ -11,7 +11,6 @@ class TaxesController implements IController
         $this->_taxes = new Taxes();
     }
 
-    //?controle=Contato&acao=listarContato
     public function indexAction()
     {
         return new View("taxes/index.phtml", ['data' => $this->_taxes->getAll()]);
@@ -40,5 +39,10 @@ class TaxesController implements IController
         if (isset($_GET['id']))
             $this->_taxes->delete($_GET['id']);
         header('Location: http://'.$_SERVER['HTTP_HOST']."/?controle=Taxes&acao=index");
+    }
+
+    public function jsonAction()
+    {
+        echo json_encode($this->_taxes->getAll());
     }
 }

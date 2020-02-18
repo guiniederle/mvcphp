@@ -8,6 +8,9 @@ try {
 } catch (PDOException $e) {
     var_dump($e->getMessage());exit;
 }
+//$sql = "TRUNCATE producttype CASCADE";
+//$table = $db->exec($sql);
+//exit;
 
 echo "----------------------------------------- RODANDO MIGRATIONS --------------------------------\n";
 
