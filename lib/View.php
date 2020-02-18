@@ -1,14 +1,8 @@
 <?php
+
 /**
-* Essa classe é responsável por renderizar os arquivos HTML
-* 
-* @package Exemplo simples com MVC
-* @author João Manoel
-* @version 0.1.1
-* 
-* Diretório Pai - lib
-* Arquivo - View.php 
-*/
+ * Class View
+ */
 class View
 {
     /**

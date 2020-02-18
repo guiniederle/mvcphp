@@ -1,0 +1,28 @@
+<?php
+$controller = "Taxes";
+$params = $this->getParams();
+?>
+
+<div class="row p-2">
+    <a class="btn btn-outline-primary btn-sm" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate">Adicionar</a>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Descrição</th>
+        <th>Porcentagem</th>
+        <th colspan="2" scope="col">Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($params['data'] as $data) {
+        echo "<tr>";
+        echo "<td>{$data['description']}</td>";
+        echo "<td>{$data['percentage']}</td>";
+        echo "<td><a href='http://{$_SERVER['HTTP_HOST']}/?controle={$controller}&acao=insertOrUpdate&id={$data['id']}'>Editar</a></td>";
+        echo "<td><a href='http://{$_SERVER['HTTP_HOST']}/?controle={$controller}&acao=delete&id={$data['id']}'>Deletar</a></td>";
+        echo "</tr>";
+    } ?>
+
+    </tbody>
+</table>

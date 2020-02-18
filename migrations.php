@@ -11,48 +11,48 @@ try {
 
 echo "----------------------------------------- RODANDO MIGRATIONS --------------------------------\n";
 
-$sql = "CREATE TABLE IF NOT EXISTS imposto (
+$sql = "CREATE TABLE IF NOT EXISTS tax (
     id SERIAL PRIMARY KEY,
-    descricao char(255),
-    porcentagem float
+    description char(255),
+    percentage float
 )";
 $table = $db->exec($sql);
 if (!$table) {
-    echo "imposto ok \n";
+    echo "tax ok \n";
 } else {
     var_dump($db->errorInfo());
-    echo "imposto não \n";
+    echo "tax não \n";
 }
 
 echo "---------------------------------------------------------------------------------------------\n";
 
-$sql = "CREATE TABLE IF NOT EXISTS  tiposprodutos (
+$sql = "CREATE TABLE IF NOT EXISTS  producttype (
     id SERIAL PRIMARY KEY,
-    descricao char(255)
+    description char(255)
 )";
 $table = $db->exec($sql);
 if (!$table) {
-    echo "tiposprodutos ok \n";
+    echo "producttype ok \n";
 } else {
     var_dump($db->errorInfo());
-    echo "tiposprodutos não \n";
+    echo "producttype não \n";
 }
 
 echo "---------------------------------------------------------------------------------------------\n";
 
-$sql = "CREATE TABLE IF NOT EXISTS  impostotiposprodutos (
-        tipoProdutoId integer NOT NULL,
-        impostoId integer NOT NULL,
-        FOREIGN KEY (tipoProdutoId) REFERENCES tiposprodutos (id),
-        FOREIGN KEY (impostoId) REFERENCES imposto (id)
+$sql = "CREATE TABLE IF NOT EXISTS  taxproducttype (
+        productTypeId integer NOT NULL,
+        taxId integer NOT NULL,
+        FOREIGN KEY (productTypeId) REFERENCES producttype (id),
+        FOREIGN KEY (taxId) REFERENCES tax (id)
     )";
 $table = $db->exec($sql);
 if (!$table) {
 
-    echo "impostotiposprodutos ok \n";
+    echo "taxproducttype ok \n";
 } else {
     var_dump($db->errorInfo());
-    echo "impostotiposprodutos não \n";
+    echo "taxproducttype não \n";
 }
 
 echo "----------------------------------------- FIM DAS MIGRATIONS --------------------------------\n";

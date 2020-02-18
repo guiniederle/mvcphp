@@ -12,13 +12,19 @@
 <div class="row">
     <div class="col-3 p-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Index&acao=index" role="tab"
+            <?php $activePage = [
+                'index' => strpos($_SERVER["REQUEST_URI"], 'Index') ? 'active' : '',
+                'taxes' => strpos(mb_strtolower($_SERVER["REQUEST_URI"]), 'taxes') ? 'active' : '',
+                'producttypes' => strpos(mb_strtolower($_SERVER["REQUEST_URI"]), 'producttypes') ? 'active' : '',
+                'products' => strpos(mb_strtolower($_SERVER["REQUEST_URI"]), 'products') ? 'active' : '',
+            ]; ?>
+            <a class="nav-link <?php echo $activePage['index'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Index&acao=index" role="tab"
                aria-controls="v-pills-home" aria-selected="true">Venda</a>
-            <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Imposto&acao=index" role="tab"
+            <a class="nav-link <?php echo $activePage['taxes'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Taxes&acao=index" role="tab"
                aria-controls="v-pills-profile" aria-selected="false">Impostos</a>
-            <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=TipoProdutos&acao=index" role="tab"
+            <a class="nav-link <?php echo $activePage['producttypes'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=ProductTypes&acao=index" role="tab"
                aria-controls="v-pills-messages" aria-selected="false">Tipo de Produtos</a>
-            <a class="nav-link" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Produtos&acao=index" role="tab"
+            <a class="nav-link <?php echo $activePage['products'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Products&acao=index" role="tab"
                aria-controls="v-pills-settings" aria-selected="false">Produtos</a>
         </div>
     </div>
@@ -38,12 +44,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
-<script>
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        console.log("opa");
-        e.target // newly activated tab
-        e.relatedTarget // previous active tab
-    })
-</script>
 </body>
 </html>
