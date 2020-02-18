@@ -47,9 +47,9 @@ class ProductTypes extends PersistModelAbstract implements IModels
 
     public function getByIdWithTaxes($id)
     {
-        $sql = "SELECT pt.description, array_agg(tax.id) as taxid FROM {$this->_dbName} pt
+        $sql = "SELECT pt.id, pt.description, array_agg(tax.id) as taxid FROM {$this->_dbName} pt
         LEFT JOIN taxproducttype tpt ON tpt.productTypeId = pt.id
-        LEFT JOIN tax ON tax.id = tpt.taxId WHERE pt.id = :id GROUP BY pt.description";
+        LEFT JOIN tax ON tax.id = tpt.taxId WHERE pt.id = :id GROUP BY pt.description, pt.id";
         $productType = $this->_db->prepare($sql);
         $productType->bindValue(':id', $id);
         $productType->execute();

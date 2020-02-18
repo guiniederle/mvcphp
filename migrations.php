@@ -16,7 +16,7 @@ echo "----------------------------------------- RODANDO MIGRATIONS -------------
 
 $sql = "CREATE TABLE IF NOT EXISTS tax (
     id SERIAL PRIMARY KEY,
-    description char(255),
+    description text,
     percentage float
 )";
 $table = $db->exec($sql);
@@ -31,7 +31,7 @@ echo "--------------------------------------------------------------------------
 
 $sql = "CREATE TABLE IF NOT EXISTS  producttype (
     id SERIAL PRIMARY KEY,
-    description char(255)
+    description text
 )";
 $table = $db->exec($sql);
 if (!$table) {
@@ -56,6 +56,23 @@ if (!$table) {
 } else {
     var_dump($db->errorInfo());
     echo "taxproducttype não \n";
+}
+
+echo "---------------------------------------------------------------------------------------------\n";
+
+$sql = "CREATE TABLE IF NOT EXISTS  products (
+        id SERIAL PRIMARY KEY,
+        description text,
+        productTypeId integer NOT NULL,
+        FOREIGN KEY (productTypeId) REFERENCES producttype (id)
+    )";
+$table = $db->exec($sql);
+if (!$table) {
+
+    echo "products ok \n";
+} else {
+    var_dump($db->errorInfo());
+    echo "products não \n";
 }
 
 echo "----------------------------------------- FIM DAS MIGRATIONS --------------------------------\n";

@@ -1,0 +1,32 @@
+<?php
+$controller = 'Products';
+$params = $this->getParams();
+
+if (isset($params['return'])) {
+    echo "<div class=\"row\">
+        <div class=\"alert alert-{$params['return']['status']} w-100 d-flex justify-content-center\" role=\"alert\">
+          {$params['return']['message']}
+        </div>
+</div>";
+}
+?>
+
+<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate" method="post">
+    <div class="form-row">
+        <input hidden name="id" value="<?php echo $params['data']['id'] ?>" readonly>
+        <div class="form-group col-md-6">
+            <label for="description">Descrição</label>
+            <input type="text" class="form-control" name="description" id="description" value="<?php echo $params['data']['description'] ?>">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="typeProductId">Tipo do Produto</label>
+            <select name="producttypeid" class="form-control" id="typeProductId">
+                <?php foreach ($params['productTypes'] as $productTypes) {
+                    echo "<option value='" . $productTypes['id'] . "'>" . $productTypes['description'] . "</option>";
+                } ?>
+            </select>
+        </div>
+    </div>
+    <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=index" class="btn btn-link btn-sm">Voltar</a>
+    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+</form>
