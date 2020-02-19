@@ -63,6 +63,7 @@ echo "--------------------------------------------------------------------------
 $sql = "CREATE TABLE IF NOT EXISTS  products (
         id SERIAL PRIMARY KEY,
         description text,
+        price float,
         productTypeId integer NOT NULL,
         FOREIGN KEY (productTypeId) REFERENCES producttype (id)
     )";

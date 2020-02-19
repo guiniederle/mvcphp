@@ -19,6 +19,10 @@ if (isset($params['return'])) {
             <input type="text" class="form-control" name="description" id="description" value="<?php echo $params['data']['description'] ?>">
         </div>
         <div class="form-group col-md-6">
+            <label for="price">Preço</label>
+            <input type="text" class="form-control" name="price" id="price" placeholder="R$12,00 são 12.00" value="<?php echo $params['data']['price'] ?>">
+        </div>
+        <div class="form-group col-md-6">
             <label for="typeProductId">Tipo do Produto</label>
             <select name="producttypeid" class="form-control" id="typeProductId">
                 <?php foreach ($params['productTypes'] as $productTypes) {

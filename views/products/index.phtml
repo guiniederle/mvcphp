@@ -10,6 +10,7 @@ $params = $this->getParams();
     <thead>
     <tr>
         <th>Descrição</th>
+        <th>Preço (R$)</th>
         <th>Tipo do Produto</th>
         <th colspan="2" scope="col">Ações</th>
     </tr>
@@ -18,6 +19,7 @@ $params = $this->getParams();
     <?php foreach ($params['data'] as $data) {
         echo "<tr>";
         echo "<td>{$data['description']}</td>";
+        echo "<td>{$data['price']}</td>";
         echo "<td>{$data['producttype']}</td>";
         echo "<td><a href='http://{$_SERVER['HTTP_HOST']}/?controle={$controller}&acao=insertOrUpdate&id={$data['id']}'>Editar</a></td>";
         echo "<td><a href='http://{$_SERVER['HTTP_HOST']}/?controle={$controller}&acao=delete&id={$data['id']}'>Deletar</a></td>";

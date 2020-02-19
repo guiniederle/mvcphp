@@ -1,1 +1,134 @@
-opa
+<div class="row">
+    <div class="card border-dark mb-3 w-100">
+        <div class="card-body text-dark d-flex justify-content-between bd-highlight">
+            <div class="col-md-8">
+                <div>Valor da Compra: <span id="valor-compra">0.0</span></div>
+                <div class="m-0">Valor dos Impostos: <span id="valor-impostos">0.0</span></div>
+            </div>
+            <div class="col-6 col-md-4">
+                <button type="button" id="add-product" class="btn btn-primary m-1">Acrescentar Produto</button>
+                <button type="button" class="btn btn-outline-success shopping-end m-1">Finalizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" id="add-cards">
+</div>
+
+<script>
+    $(document).ready(function() {
+        callSelect2();
+
+        $('.shopping-end').click(function () {
+            location.reload();
+        });
+
+        $('#add-product').click(function() {
+            let newCard = '<div class="card shadow m-3">' +
+                '        <div class="card-body" data-qtd="" data-product="">' +
+                '            <div class="form-group">' +
+                '                <select class="select2 js-states form-control"></select>' +
+                '            </div>' +
+                '            <div class="form-group">' +
+                '                <input type="number" class="form-control qtd" placeholder="Quantidade. Ex.: 2">' +
+                '            </div>' +
+                '            <div class="form-group">' +
+                '                <div><small>Valor: <span class="valor-produto">00.00</span> | Imposto: <span class="valor-imposto">00.00</span></small></div>' +
+                '            </div>' +
+                '            <button type="button" class="btn btn-primary btn-sm calculate">Calcular</button>' +
+                '            <button type="button" class="btn btn-outline-danger btn-sm remove-purchase">Remover</button>' +
+                '        </div>' +
+                '    </div>';
+            $('#add-cards').append(newCard);
+            callSelect2();
+        });
+
+        $(document).on("click", ".calculate", function(e){
+            e.preventDefault();
+            let productId = $(this).parents('.card-body').find('.select2').val();
+            let quantity = $(this).parents('.card-body').find('.qtd').val();
+            incrementShoppingList(productId, quantity, this);
+        });
+
+        $(document).on("click", ".remove-purchase", function(e){
+            e.preventDefault();
+            $(this).parents('.card').remove();
+            incrementTotalValues();
+        });
+    });
+
+    function callSelect2() {
+        $('.select2').select2({
+            ajax: {
+                url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=Products&acao=json',
+                dataType: 'json',
+                processResults: function (data) {
+                    let result = [];
+                    for (let i in data) {
+                        result.push({
+                            "id": data[i].id,
+                            "text": data[i].description
+                        });
+                    }
+
+                    return {
+                        results: result
+                    };
+                }
+            },
+            allowClear: false,
+            language: "pt-br",
+            placeholder: "Selecione um produto",
+        });
+    }
+
+    function incrementShoppingList(productId, qtd, element) {
+        if (productId === null || qtd === "")
+            return;
+
+        $.ajax({
+            url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=Products&acao=infoProduct',
+            dataType: 'json',
+            method: 'POST',
+            data: {
+                productId: productId
+            },
+            success: function (response) {
+                calculate(response, qtd, element);
+            }
+        })
+    }
+
+    function calculate(response, qtd, element) {
+        if (response.length <= 0)
+            return;
+
+        let price = response[0].price * qtd;
+        let taxes = 0;
+        for (i in response) {
+            taxes = taxes + ((response[i].percentage/100)*price);
+        }
+
+        $(element).parents('.card-body').find('.valor-imposto').html(taxes.toFixed(2));
+        $(element).parents('.card-body').find('.valor-produto').html(price.toFixed(2));
+        incrementTotalValues();
+
+    }
+    
+    function incrementTotalValues() {
+        let totalValue = 0;
+        let totalTaxes = 0;
+
+        $('.valor-produto').each(function (index, element) {
+            console.log($(element));
+            totalValue = totalValue + parseFloat($(element).html());
+        });
+
+        $('.valor-imposto').each(function (index, element) {
+            totalTaxes = totalTaxes + parseFloat($(element).html());
+        });
+
+        $('#valor-compra').html(totalValue.toFixed(2));
+        $('#valor-impostos').html(totalTaxes.toFixed(2));
+    }
+</script>

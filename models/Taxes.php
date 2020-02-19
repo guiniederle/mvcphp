@@ -33,7 +33,7 @@ class Taxes extends PersistModelAbstract implements IModels
         try {
             $stmt = $this->_db->prepare($sql);
             $stmt->bindValue(':description', $data['description']);
-            $stmt->bindValue(':percentage', $data['percentage']);
+            $stmt->bindValue(':percentage', str_replace('%', '', $data['percentage']));
             $stmt->execute();
 
             return $this->mountReturn('success', "Imposto salvo com sucesso!");

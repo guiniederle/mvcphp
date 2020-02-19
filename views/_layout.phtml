@@ -23,7 +23,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 </head>
-<body>
+<body class="bg-light">
 <div class="container-fluid">
     <div class="row">
         <div class="col-3 p-3">
@@ -35,7 +35,7 @@
                     'products' => strpos(mb_strtolower($_SERVER["REQUEST_URI"]), 'products') ? 'active' : '',
                 ]; ?>
                 <a class="nav-link <?php echo $activePage['index'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Index&acao=index" role="tab"
-                   aria-controls="v-pills-home" aria-selected="true">Venda</a>
+                   aria-controls="v-pills-home" aria-selected="true">Vendas</a>
                 <a class="nav-link <?php echo $activePage['taxes'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=Taxes&acao=index" role="tab"
                    aria-controls="v-pills-profile" aria-selected="false">Impostos</a>
                 <a class="nav-link <?php echo $activePage['producttypes'] ?>" href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=ProductTypes&acao=index" role="tab"

@@ -10,18 +10,22 @@ if (isset($params['return'])) {
 }
 ?>
 
-<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate" method="post">
+<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate"
+      method="post">
     <div class="form-row">
         <input hidden name="id" value="<?php echo $params['data']['id'] ?>" readonly>
         <div class="form-group col-md-6">
             <label for="description">Descrição</label>
-            <input type="text" class="form-control" name="description" id="description" value="<?php echo $params['data']['description'] ?>">
+            <input type="text" class="form-control" name="description" id="description"
+                   value="<?php echo $params['data']['description'] ?>">
         </div>
         <div class="form-group col-md-6">
             <label for="percentage">Porcentagem</label>
-            <input type="text" class="form-control" name="percentage" id="percentage" value="<?php echo $params['data']['percentage'] ?>">
+            <input type="text" class="form-control" name="percentage" id="percentage" placeholder="Ex.: 0.2% ou 3%"
+                   value="<?php echo $params['data']['percentage'] ?>">
         </div>
     </div>
-    <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=index" class="btn btn-link btn-sm">Voltar</a>
+    <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=index"
+       class="btn btn-link btn-sm">Voltar</a>
     <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 </form>
