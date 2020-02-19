@@ -26,7 +26,8 @@ if (isset($params['return'])) {
             <label for="typeProductId">Tipo do Produto</label>
             <select name="producttypeid" class="form-control" id="typeProductId">
                 <?php foreach ($params['productTypes'] as $productTypes) {
-                    echo "<option value='" . $productTypes['id'] . "'>" . $productTypes['description'] . "</option>";
+                    $checked = $params['data']['idpt'] == $productTypes['id'] ? 'selected' : '';
+                    echo "<option {$checked} value='" . $productTypes['id'] . "'>" . $productTypes['description'] . "</option>";
                 } ?>
             </select>
         </div>
