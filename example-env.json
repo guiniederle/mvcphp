@@ -1,0 +1,11 @@
+{
+	"dbconfig": {
+		"dbname": "dbname",
+		"dbhost": "localhost",
+		"dbuser": "",
+		"dbpass": ""
+	},
+	"web": {
+		"mainhost": "http://localhost:63000"
+	}
+}

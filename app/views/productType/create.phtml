@@ -11,7 +11,7 @@ if (isset($params['return'])) {
 }
 ?>
 
-<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate" method="post">
+<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate&id=<?php echo $params['data']['id'] ?>" method="post">
     <div class="form-row">
         <input hidden name="id" value="<?php echo $params['data']['id'] ?>" readonly>
         <div class="form-group col-md-6">
@@ -22,7 +22,7 @@ if (isset($params['return'])) {
     <div class="form-row">
         <div class="form-group col-md-12">
             <label for="taxes">Impostos</label>
-            <select id="taxes" data-ids="<?php echo $params['data']['taxid'] ?>" class="select2-multiple js-states form-control" name="taxes[]" multiple="multiple">
+            <select id="taxes" class="select2-multiple js-states form-control" name="taxes[]" multiple="multiple">
             </select>
         </div>
     </div>
@@ -32,27 +32,23 @@ if (isset($params['return'])) {
 
 <script>
     $(document).ready(function() {
-        $('.select2-multiple').select2({
-            ajax: {
-                url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=Taxes&acao=json',
-                dataType: 'json',
-                processResults: function (data) {
-                    let result = [];
-                    for (let i in data) {
-                        result.push({
-                            "id": data[i].id,
-                            "text": data[i].description
-                        });
-                    }
+        $.ajax({
+            url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=Taxes&acao=json&id=<?php echo $params['data']['id'] ?>',
+            dataType: 'json',
+        })
+        .done(function( data ) {
+            let options = '';
+            for (let i in data['all']) {
+                let selected = data['selected'].includes(data['all'][i].id) ? 'selected' : '';
+                options += '<option '+ selected +' value="' + data['all'][i].id + '">' + data['all'][i].description + '</option>';
+            }
+            $('#taxes').append(options);
 
-                    return {
-                        results: result
-                    };
-                }
-            },
-            allowClear: true,
-            language: "pt-br",
-            placeholder: "Selecione o(s) imposto(s)",
+            $('.select2-multiple').select2({
+                allowClear: true,
+                language: "pt-br",
+                placeholder: "Selecione o(s) imposto(s)",
+            });
         });
     });
 </script>

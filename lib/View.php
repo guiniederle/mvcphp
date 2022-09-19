@@ -1,5 +1,9 @@
 <?php
 
+namespace Lib;
+
+use Exception;
+
 /**
  * Class View
  */
@@ -47,11 +51,12 @@ class View
     */
     public function setView($st_view)
     {
-        $st_view = "views/" . $st_view;
-        if(file_exists($st_view))
+        $st_view = "app/views/" . $st_view;
+        if (file_exists($st_view)) {
             $this->st_view = $st_view;
-        else
-            throw new Exception("View File '$st_view' don't exists");       
+        } else {
+            throw new Exception("View File '$st_view' don't exists");
+        }
     }
       
     /**
@@ -90,10 +95,10 @@ class View
     public function getContents()
     {
         ob_start();
-        $pageView = "views/index.phtml";
+        $pageView = "app/views/index.phtml";
         if(isset($this->st_view))
             $pageView = $this->st_view;
-        require_once "views/_layout.phtml";
+        require_once "app/views/_layout.phtml";
         $this->st_contents = ob_get_contents();
         ob_end_clean();
         return $this->st_contents;

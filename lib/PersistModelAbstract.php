@@ -1,5 +1,10 @@
 <?php
 
+namespace Lib;
+
+use PDO;
+use PDOException;
+
 /**
  * Class PersistModelAbstract
  */
@@ -7,21 +12,33 @@ abstract class PersistModelAbstract
 {
     /**
     * Variável responsável por guardar dados da conexão do banco
-    * @var resource
+    * @var PDO
     */
     protected $_db;
       
-    function __construct()
+    public function __construct()
     {
-        $dbconfig = json_decode(file_get_contents("dbconfig.json"));
+        $dbconfig = json_decode(file_get_contents("env.json"));
 
         try {
-            $this->_db = new PDO("pgsql:dbname={$dbconfig->dbname};host={$dbconfig->dbhost}", $dbconfig->dbuser, $dbconfig->dbpass);
-            $this->_db->setAttribute ( PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION );
+            $this->_db = new PDO(
+                "pgsql:dbname={$dbconfig->dbconfig->dbname};host={$dbconfig->dbconfig->dbhost}",
+                $dbconfig->dbconfig->dbuser,
+                $dbconfig->dbconfig->dbpass
+            );
+            $this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             var_dump($e->getMessage());exit;
         }
 
+    }
+
+    /**
+     * Retorna a conexão com o banco
+     */
+    protected function getConnection(): PDO
+    {
+        return $this->_db;
     }
 }
 ?>

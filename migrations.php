@@ -1,9 +1,13 @@
 <?php
 
-$dbconfig = json_decode(file_get_contents("dbconfig.json"));
+$dbconfig = json_decode(file_get_contents("env.json"));
 
 try {
-    $db = new PDO("pgsql:dbname={$dbconfig->dbname};host={$dbconfig->dbhost}", $dbconfig->dbuser, $dbconfig->dbpass);
+    $db = new PDO(
+        "pgsql:dbname={$dbconfig->dbconfig->dbname};host={$dbconfig->dbconfig->dbhost}",
+        $dbconfig->dbconfig->dbuser,
+        $dbconfig->dbconfig->dbpass
+    );
     $db->setAttribute ( PDO::ATTR_ERRMODE , PDO::ERRMODE_EXCEPTION );
 } catch (PDOException $e) {
     var_dump($e->getMessage());exit;

@@ -1,3 +1,3 @@
 # mercadinho
 
-Sistema para o mercado da esquina
+Sistema voltado para estabelecimentos comerciais, implementado com MVC

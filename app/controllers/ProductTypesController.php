@@ -1,7 +1,10 @@
 <?php
 
-require_once 'IController.php';
-require_once 'models/ProductTypes.php';
+namespace App\Controllers;
+
+use App\Controllers\Interfaces\IController;
+use App\Models\ProductTypes;
+use Lib\View;
 
 class ProductTypesController implements IController
 {
@@ -25,10 +28,15 @@ class ProductTypesController implements IController
             'description' => '',
             'taxes' => []
         ];
-        if (!empty($_POST))
+        
+        if (!empty($_POST)) {
             $message = $this->_productType->insertOrUpdate($_POST);
-        if (isset($_GET['id']))
+        }
+
+        if (isset($_GET['id'])) {
             $data = $this->_productType->getByIdWithTaxes($_GET['id']);
+        }
+
         return new View("productType/create.phtml", [
             'return' => $message,
             'data' => $data
@@ -37,8 +45,10 @@ class ProductTypesController implements IController
 
     public function deleteAction()
     {
-        if (isset($_GET['id']))
+        if (isset($_GET['id'])) {
             $this->_productType->delete($_GET['id']);
+        }
+
         header('Location: http://'.$_SERVER['HTTP_HOST']."/?controle=ProductTypes&acao=index");
     }
 }

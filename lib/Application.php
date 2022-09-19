@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @param $st_class
- */
-function __autoload($st_class)
-{
-    if (file_exists('lib/' . $st_class . '.php')) {
-        require_once 'lib/' . $st_class . '.php';
-    }
-}
+namespace Lib;
+
+use Exception;
 
 class Application
 {
@@ -30,6 +24,18 @@ class Application
         $this->_action = isset($_REQUEST['acao']) ? $_REQUEST['acao'] : 'index';
     }
 
+    private function verifyClassExists()
+    {
+        $classController = "\\App\\Controllers\\{$this->_controller}Controller";
+
+        //verificando se a classe existe
+        if (class_exists($classController)) {
+            return $classController;
+        } else {
+            throw new Exception("Classe '{$classController}' nao existe!");
+        }
+    }
+
     /**
      * @throws Exception
      */
@@ -37,28 +43,15 @@ class Application
     {
         $this->loadRoute();
 
-        //verificando se o arquivo de controle existe
-        $_controller_file = 'controllers/' . $this->_controller . 'Controller.php';
-        if (file_exists($_controller_file)) {
-            require_once $_controller_file;
-        } else {
-            throw new Exception('Arquivo ' . $_controller_file . ' nao encontrado');
-        }
-
-        //verificando se a classe existe
-        $st_class = $this->_controller . 'Controller';
-        if (class_exists($st_class)) {
-            $o_class = new $st_class;
-        } else {
-            throw new Exception("Classe '$st_class' nao existe no arquivo '$_controller_file'");
-        }
+        $className = $this->verifyClassExists();
+        $classInstance = new ($className);
 
         //verificando se o metodo existe
-        $st_method = $this->_action . 'Action';
-        if (method_exists($o_class, $st_method)) {
-            $o_class->$st_method();
+        $classMethod = $this->_action . 'Action';
+        if (method_exists($classInstance, $classMethod)) {
+            $classInstance->$classMethod();
         } else {
-            throw new Exception("Metodo '$st_method' nao existe na classe $st_class'");
+            throw new Exception("Metodo '{$classMethod}' nao existe na classe {$className}'");
         }
     }
 

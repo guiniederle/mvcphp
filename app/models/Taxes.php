@@ -1,5 +1,11 @@
 <?php
-require_once "IModels.php";
+
+namespace App\Models;
+
+use App\Models\Interfaces\IModels;
+use Lib\PersistModelAbstract;
+use PDO;
+use PDOException;
 
 class Taxes extends PersistModelAbstract implements IModels
 {
@@ -9,7 +15,7 @@ class Taxes extends PersistModelAbstract implements IModels
     public function getAll()
     {
         $sql = "SELECT {$this->_columns} FROM {$this->_dbName}";
-        $taxes = $this->_db->prepare($sql);
+        $taxes = $this->getConnection()->prepare($sql);
         $taxes->execute();
 
         return $taxes->fetchAll(PDO::FETCH_ASSOC);
@@ -18,7 +24,7 @@ class Taxes extends PersistModelAbstract implements IModels
     public function getById($id)
     {
         $sql = "SELECT {$this->_columns} FROM {$this->_dbName} WHERE id = :id";
-        $taxes = $this->_db->prepare($sql);
+        $taxes = $this->getConnection()->prepare($sql);
         $taxes->bindValue(':id', $id);
         $taxes->execute();
 
@@ -28,10 +34,12 @@ class Taxes extends PersistModelAbstract implements IModels
     public function insertOrUpdate($data)
     {
         $sql = "INSERT INTO {$this->_dbName} (description, percentage) VALUES (:description, :percentage)";
-        if (!empty($data["id"]))
+        if (!empty($data["id"])) {
             $sql = "UPDATE {$this->_dbName} SET description = :description, percentage = :percentage WHERE id = {$data["id"]}";
+        }
+
         try {
-            $stmt = $this->_db->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql);
             $stmt->bindValue(':description', $data['description']);
             $stmt->bindValue(':percentage', str_replace('%', '', $data['percentage']));
             $stmt->execute();
@@ -49,7 +57,7 @@ class Taxes extends PersistModelAbstract implements IModels
     {
         try {
             $sql = "DELETE FROM {$this->_dbName} WHERE id = :id";
-            $taxes = $this->_db->prepare($sql);
+            $taxes = $this->getConnection()->prepare($sql);
             $taxes->bindValue(':id', $id);
             $taxes->execute();
 
