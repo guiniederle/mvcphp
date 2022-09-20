@@ -10,6 +10,7 @@ Vou mostrar baseado em docker, porém, pode ser usado sem também.
 - Quando a instalação for finalizada, executar o comando para subir os containers:
 `docker-compose up -d` (o parâmetro -d serve para deixar os containers rodando em background);
 - Assim que os containers subiram, será necessário pegar o ip do banco de dados para preencher o arquivo env.json, se for usado o docker-compose do projeto, basta executar o comando: `docker-compose exec postgres ifconfig` e pegar o ip conforme imagem:
+
 ![image](https://user-images.githubusercontent.com/8507716/191156640-db201c7f-3a5d-448c-9f50-a7a66f22c6d2.png)
 
 - Assim que localizar o ip do container do banco de dados, basta renomear o arquivo example-env.json para env.json e preencher as informações faltantes, o meu ficou assim:
