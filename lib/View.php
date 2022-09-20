@@ -38,8 +38,9 @@ class View
     */
     function __construct($st_view = null, $v_params = null) 
     {
-        if($st_view != null)
+        if ($st_view != null) {
             $this->setView($st_view);
+        }
         $this->v_params = $v_params;
         $this->showContents();
     }   
@@ -88,19 +89,22 @@ class View
       
     /**
     * Retorna uma string contendo todo 
-    * o conteudo do arquivo de visualiza√ß√£o
+    * o conteudo do arquivo de visualizacao
     * 
     * @return string
     */
-    public function getContents()
+    public function getContents() :string
     {
         ob_start();
         $pageView = "app/views/index.phtml";
-        if(isset($this->st_view))
+        if (isset($this->st_view)) {
             $pageView = $this->st_view;
+        }
+
         require_once "app/views/_layout.phtml";
         $this->st_contents = ob_get_contents();
         ob_end_clean();
+
         return $this->st_contents;
     }
       

@@ -1,6 +1,11 @@
 <?php
 
-require_once 'IModels.php';
+namespace App\Models;
+
+use App\Models\Interfaces\IModels;
+use Lib\PersistModelAbstract;
+use PDO;
+use PDOException;
 
 class Products extends PersistModelAbstract implements IModels
 {
@@ -10,7 +15,7 @@ class Products extends PersistModelAbstract implements IModels
     {
         $sql = "SELECT p.id, p.description, p.price, pt.description as producttype FROM {$this->_dbName} p
             JOIN producttype pt ON pt.id = p.productTypeId";
-        $taxes = $this->_db->prepare($sql);
+        $taxes = $this->getConnection()->prepare($sql);
         $taxes->execute();
 
         return $taxes->fetchAll(PDO::FETCH_ASSOC);
@@ -21,7 +26,7 @@ class Products extends PersistModelAbstract implements IModels
         $sql = "SELECT p.id, p.description, p.price, pt.id as idpt, pt.description as producttype FROM {$this->_dbName} p
             JOIN producttype pt ON pt.id = productTypeId
             WHERE p.id = :id";
-        $taxes = $this->_db->prepare($sql);
+        $taxes = $this->getConnection()->prepare($sql);
         $taxes->bindValue(':id', $id);
         $taxes->execute();
 
@@ -35,7 +40,7 @@ class Products extends PersistModelAbstract implements IModels
             $sql = "UPDATE {$this->_dbName} SET description = :description, producttypeid = :producttypeid , price = :price 
                 WHERE id = {$data["id"]}";
         try {
-            $stmt = $this->_db->prepare($sql);
+            $stmt = $this->getConnection()->prepare($sql);
             $stmt->bindValue(':description', $data['description']);
             $stmt->bindValue(':producttypeid', $data['producttypeid']);
             $stmt->bindValue(':price', $data['price']);
@@ -54,7 +59,7 @@ class Products extends PersistModelAbstract implements IModels
     {
         try {
             $sql = "DELETE FROM {$this->_dbName} WHERE id = :id";
-            $taxes = $this->_db->prepare($sql);
+            $taxes = $this->getConnection()->prepare($sql);
             $taxes->bindValue(':id', $id);
             $taxes->execute();
 
@@ -74,7 +79,7 @@ class Products extends PersistModelAbstract implements IModels
             INNER JOIN taxproducttype taxpt ON pt.id = taxpt.productTypeId
             INNER JOIN tax ON tax.id = taxpt.taxId
             WHERE p.id = :id";
-        $taxes = $this->_db->prepare($sql);
+        $taxes = $this->getConnection()->prepare($sql);
         $taxes->bindValue(':id', $productId);
         $taxes->execute();
 

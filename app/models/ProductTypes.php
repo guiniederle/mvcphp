@@ -40,9 +40,11 @@ class ProductTypes extends PersistModelAbstract implements IModels
 
     public function getAllWithTaxes()
     {
-        $sql = "SELECT pt.id, pt.description, array_agg(tax.description) as taxdescription FROM {$this->_dbName} pt
+        $sql = "SELECT pt.id, pt.description, array_agg(tax.description) as taxdescription
+        FROM {$this->_dbName} pt
         LEFT JOIN taxproducttype tpt ON tpt.productTypeId = pt.id
-        LEFT JOIN tax ON tax.id = tpt.taxId GROUP BY pt.id";
+        LEFT JOIN tax ON tax.id = tpt.taxId
+        GROUP BY pt.id";
         $productType = $this->getConnection()->prepare($sql);
         $productType->execute();
 
@@ -51,9 +53,12 @@ class ProductTypes extends PersistModelAbstract implements IModels
 
     public function getByIdWithTaxes($id)
     {
-        $sql = "SELECT pt.id, pt.description, array_agg(tax.id) as taxid FROM {$this->_dbName} pt
+        $sql = "SELECT pt.id, pt.description, array_agg(tax.id) as taxid
+        FROM {$this->_dbName} pt
         LEFT JOIN taxproducttype tpt ON tpt.productTypeId = pt.id
-        LEFT JOIN tax ON tax.id = tpt.taxId WHERE pt.id = :id GROUP BY pt.description, pt.id";
+        LEFT JOIN tax ON tax.id = tpt.taxId
+        WHERE pt.id = :id
+        GROUP BY pt.description, pt.id";
         $productType = $this->getConnection()->prepare($sql);
         $productType->bindValue(':id', $id);
         $productType->execute();
@@ -108,6 +113,7 @@ class ProductTypes extends PersistModelAbstract implements IModels
 
     public function delete($id)
     {
+        //TODO: Ao deletar um tipo de produto vinculado a um produto, ocorre erro e nao mostra na tela
         try {
             $this->_taxesProductTypes->remove($id);
             $sql = "DELETE FROM {$this->_dbName} WHERE id = :id";

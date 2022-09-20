@@ -58,7 +58,7 @@ class TaxesController implements IController
         $taxesProductType = new TaxesProductTypes();
         echo json_encode([
             'all' => $this->_taxes->getAll(),
-            'selected' => isset($_GET['id']) ? $taxesProductType->getTaxesByProductTypeId($_GET['id']) : []
+            'selected' => isset($_GET['id']) && !empty($_GET['id']) ? $taxesProductType->getTaxesByProductTypeId($_GET['id']) : []
         ]);
     }
 }

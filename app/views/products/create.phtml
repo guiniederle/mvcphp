@@ -11,7 +11,7 @@ if (isset($params['return'])) {
 }
 ?>
 
-<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate" method="post">
+<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate&id=<?php echo $params['data']['id'] ?>" method="post">
     <div class="form-row">
         <input hidden name="id" value="<?php echo $params['data']['id'] ?>" readonly>
         <div class="form-group col-md-6">
@@ -24,14 +24,35 @@ if (isset($params['return'])) {
         </div>
         <div class="form-group col-md-6">
             <label for="typeProductId">Tipo do Produto</label>
-            <select name="producttypeid" class="form-control" id="typeProductId">
-                <?php foreach ($params['productTypes'] as $productTypes) {
-                    $checked = $params['data']['idpt'] == $productTypes['id'] ? 'selected' : '';
-                    echo "<option {$checked} value='" . $productTypes['id'] . "'>" . $productTypes['description'] . "</option>";
-                } ?>
-            </select>
+            <select name="producttypeid" class="form-control" id="typeProductId" data-typeproductid="<?php echo $params['data']['idpt'] ?>"></select>
         </div>
     </div>
     <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=index" class="btn btn-link btn-sm">Voltar</a>
     <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
 </form>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=ProductTypes&acao=json',
+            dataType: 'json',
+        })
+        .done(function( data ) {
+            let options = '';
+            const typeProductId = $('#typeProductId').data('typeproductid');
+            
+            for (let i in data) {
+                let selected = typeProductId == data[i].id ? 'selected' : '';
+                options += '<option '+ selected +' value="' + data[i].id + '">' + data[i].description + '</option>';
+            }
+            
+            $('#typeProductId').append(options);
+
+            $('.producttypeid').select2({
+                allowClear: true,
+                language: "pt-br",
+                placeholder: "Selecione o tipo de produto",
+            });
+        });
+    });
+</script>

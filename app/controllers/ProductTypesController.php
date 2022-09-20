@@ -28,7 +28,7 @@ class ProductTypesController implements IController
             'description' => '',
             'taxes' => []
         ];
-        
+
         if (!empty($_POST)) {
             $message = $this->_productType->insertOrUpdate($_POST);
         }
@@ -50,5 +50,10 @@ class ProductTypesController implements IController
         }
 
         header('Location: http://'.$_SERVER['HTTP_HOST']."/?controle=ProductTypes&acao=index");
+    }
+
+    public function jsonAction()
+    {
+        echo json_encode($this->_productType->getAll());
     }
 }

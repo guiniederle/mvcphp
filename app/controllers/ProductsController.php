@@ -1,8 +1,11 @@
 <?php
 
-require_once 'IController.php';
-require_once 'models/Products.php';
-require_once 'models/ProductTypes.php';
+namespace App\Controllers;
+
+use App\Controllers\Interfaces\IController;
+use App\Models\Products;
+use App\Models\ProductTypes;
+use Lib\View;
 
 class ProductsController implements IController
 {
@@ -29,21 +32,27 @@ class ProductsController implements IController
             'producttype' => '',
             'price' => '',
         ];
-        if (!empty($_POST))
+
+        if (!empty($_POST)) {
             $message = $this->_product->insertOrUpdate($_POST);
-        if (isset($_GET['id']))
+        }
+
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
             $data = $this->_product->getById($_GET['id']);
+        }
+
         return new View("products/create.phtml", [
             'return' => $message,
-            'data' => $data,
-            'productTypes' => $this->_productTypes->getAll()
+            'data' => $data
         ]);
     }
 
     public function deleteAction()
     {
-        if (isset($_GET['id']))
+        if (isset($_GET['id'])) {
             $this->_product->delete($_GET['id']);
+        }
+
         header('Location: http://'.$_SERVER['HTTP_HOST']."/?controle=Products&acao=index");
     }
 

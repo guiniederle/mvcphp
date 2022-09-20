@@ -12,9 +12,6 @@ try {
 } catch (PDOException $e) {
     var_dump($e->getMessage());exit;
 }
-//$sql = "TRUNCATE producttype CASCADE";
-//$table = $db->exec($sql);
-//exit;
 
 echo "----------------------------------------- RODANDO MIGRATIONS --------------------------------\n";
 
@@ -55,7 +52,6 @@ $sql = "CREATE TABLE IF NOT EXISTS  taxproducttype (
     )";
 $table = $db->exec($sql);
 if (!$table) {
-
     echo "taxproducttype ok \n";
 } else {
     var_dump($db->errorInfo());

@@ -9,11 +9,17 @@ if (isset($params['return'])) {
         </div>
 </div>";
 }
+
+$productTypeId = $params['data']['id'];
+$productTypeIdParam = "";
+if (isset($productTypeId) && !empty($productTypeId)) {
+    $productTypeIdParam = "&id={$productTypeId}";
+}
 ?>
 
-<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate&id=<?php echo $params['data']['id'] ?>" method="post">
+<form action="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=insertOrUpdate<?php echo $productTypeIdParam ?>" method="post">
     <div class="form-row">
-        <input hidden name="id" value="<?php echo $params['data']['id'] ?>" readonly>
+        <input hidden name="id" value="<?php echo $productTypeId ?>" readonly>
         <div class="form-group col-md-6">
             <label for="description">Descrição</label>
             <input type="text" class="form-control" name="description" id="description" value="<?php echo $params['data']['description'] ?>">
@@ -22,8 +28,7 @@ if (isset($params['return'])) {
     <div class="form-row">
         <div class="form-group col-md-12">
             <label for="taxes">Impostos</label>
-            <select id="taxes" class="select2-multiple js-states form-control" name="taxes[]" multiple="multiple">
-            </select>
+            <select id="taxes" class="select2-multiple js-states form-control" name="taxes[]" multiple="multiple"></select>
         </div>
     </div>
     <a href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/?controle=<?php echo $controller ?>&acao=index" class="btn btn-link btn-sm">Voltar</a>
@@ -33,7 +38,7 @@ if (isset($params['return'])) {
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=Taxes&acao=json&id=<?php echo $params['data']['id'] ?>',
+            url: 'http://<?php echo $_SERVER["HTTP_HOST"] ?>/?controle=Taxes&acao=json&id=<?php echo $productTypeId ?>',
             dataType: 'json',
         })
         .done(function( data ) {
